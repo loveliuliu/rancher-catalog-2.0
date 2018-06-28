@@ -27,7 +27,7 @@ questions:
     description: "MongoDB image name"
     type: string
     label: MongoDB Image Name
-  - variable: mariadb.image.tag
+  - variable: mongodb.image.tag
     default: "3.6"
     description: "MongoDB image tag"
     type: string
@@ -139,7 +139,7 @@ questions:
   description: "Enable persistent volume for MongoDB"
   type: boolean
   required: true
-  label: MariaDB Persistent Volume Enabled
+  label: MongoDB Persistent Volume Enabled
   show_if: "mongodb.enabled=true"
   show_subquestion_if: true
   group: "Database Settings"
