@@ -62,6 +62,7 @@ questions:
       description: "Set this to true incase you are going to use the email connector in loopback"
       default: "false"
       show_subquestion_if: true
+      group: "NodeJS App Settings"
       subquestions:
       - variable: smtpHost
         label: "SMTP HOST"
