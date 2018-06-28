@@ -1,0 +1,120 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "fullname" . }}
+  labels:
+    app: {{ template "fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: {{ template "fullname" . }}
+    spec:
+      {{- if .Values.image.pullSecrets }}
+      imagePullSecrets:
+      {{- range .Values.image.pullSecrets }}
+        - name: {{ . }}
+      {{- end}}
+      {{- end }}
+      containers:
+      - name: {{ template "fullname" . }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+        env:
+        - name: NODE_ENV
+          value: {{ default "" .Values.nodeEnv | quote }}
+        - name: FILE_STORAGE_PATH
+          value: {{ default "" .Values.fileStoragePath | quote }}
+        - name: SMTP_DS_HOST
+          value: {{ default "" .Values.smtpDsHost | quote }}
+        - name: SMTP_DS_SECURE
+          value: {{ default "" .Values.smtpDsSecure | quote }}
+        - name: SMTP_DS_REQUIRETLS
+          value: {{ default "" .Values.smtpDsRequiretls | quote }}
+        - name: SMTP_DS_PORT
+          value: {{ default "" .Values.smtpDsPort | quote }}
+        - name: SMTP_DS_USER
+          value: {{ default "" .Values.smtpDsUser | quote }}
+        - name: SMTP_DS_PASS
+          value: {{ default "" .Values.smtpDsPass | quote }}
+        - name: MONGODB_HOST
+        {{- if .Values.mongodb.enabled }}
+          value: {{ template "mongodb.fullname" . }}
+        {{- else }}
+          value: {{ .Values.externalDatabase.host | quote }}
+        {{- end }}
+        - name: MONGODB_PORT
+        {{- if .Values.mongodb.enabled }}
+          value: "27017"
+        {{- else }}
+          value: {{ .Values.externalDatabase.port | quote }}
+        {{- end }}
+        - name: MONGODB_DATABASE
+        {{- if .Values.mongodb.enabled }}
+          value: {{ .Values.mongodb.mongodbDatabase | quote }}
+        {{- else }}
+          value: {{ .Values.externalDatabase.database | quote }}
+        {{- end }}
+        - name: MONGODB_USERNAME
+        {{- if .Values.mongodb.enabled }}
+          value: {{ .Values.mongodb.mongodbUsername | quote }}
+        {{- else }}
+          value: {{ .Values.externalDatabase.user | quote }}
+        {{- end }}
+        - name: MONGODB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+            {{- if .Values.mongodb.enabled }}
+              name: {{ template "mongodb.fullname" . }}
+              key: mongodb-password
+            {{- else }}
+              name: {{ printf "%s-%s" .Release.Name "externaldb" }}
+              key: db-password
+            {{- end }}
+        ports:
+        - name: http
+          containerPort: 80
+        - name: https
+          containerPort: 443
+        livenessProbe:
+          httpGet:
+            path: /
+          {{- if not .Values.healthcheckHttps }}
+            port: http
+          {{- else }}
+            port: https
+            scheme: HTTPS
+          {{- end }}
+{{ toYaml .Values.livenessProbe | indent 10 }}
+        readinessProbe:
+          httpGet:
+            path: /
+          {{- if not .Values.healthcheckHttps }}
+            port: http
+          {{- else }}
+            port: https
+            scheme: HTTPS
+          {{- end }}
+{{ toYaml .Values.readinessProbe | indent 10 }}
+        volumeMounts:
+        - mountPath: /nodejs/assets
+          name: nodejs-app-data
+          subPath: assets
+        resources:
+{{ toYaml .Values.resources | indent 10 }}
+      volumes:
+      - name: nodejs-app-data
+      {{- if .Values.persistence.enabled }}
+        persistentVolumeClaim:
+          claimName: {{ .Values.persistence.existingClaim | default (include "fullname" .) }}
+      {{- else }}
+        emptyDir: {}
+      {{ end }}
+    {{- if .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.nodeSelector | indent 8 }}
+      {{- end -}}

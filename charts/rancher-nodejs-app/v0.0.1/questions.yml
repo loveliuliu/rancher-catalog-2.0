@@ -1,0 +1,177 @@
+categories:
+- Backend
+questions:
+- variable: defaultImage
+  default: "true"
+  description: "Use default Docker image"
+  label: Use Default Image
+  type: boolean
+  show_subquestion_if: false
+  group: "Container Images"
+  subquestions:
+  - variable: image.repository
+    default: ""
+    description: "NodeJS App image name"
+    type: string
+    label: NodeJS App Image Name
+    required: true
+  - variable: image.tag
+    default: ""
+    description: "NodeJS App image tag"
+    type: string
+    label: Image Tag
+    required: true
+  - variable: mongodb.image.repository
+    default: "bitnami/mongodb"
+    description: "MongoDB image name"
+    type: string
+    label: MongoDB Image Name
+  - variable: mariadb.image.tag
+    default: "3.6"
+    description: "MongoDB image tag"
+    type: string
+    label: MongoDB Image Tag
+- variable: mongodb.enabled
+  default: "true"
+  description: "Deploy a database server as part of this deployment, or set to false and configure an external database connection."
+  type: boolean
+  required: true
+  label: Install MongoDB
+  show_subquestion_if: true
+  group: "Database Settings"
+  subquestions:
+  - variable: mongodb.mongodbDatabase
+    default: ""
+    required: true
+    description: "Database name to create"
+    type: string
+    label: MongoDB Database
+  - variable: mongodb.mongodbUsername
+    default: ""
+    required: true
+    description: "Database user to create"
+    type: string
+    label: MongoDB User
+  - variable: mongodb.mongodbPassword
+    default: ""
+    description: "password will be auto-generated if not specified"
+    type: password
+    label: MongoDB Password
+- variable: externalDatabase.host
+  default: ""
+  description: "Host of the external database"
+  type: string
+  label: External Database Host
+  show_if: "mongodb.enabled=false"
+  group: "Database Settings"
+- variable: externalDatabase.user
+  default: ""
+  description: "Existing username in the external DB"
+  type: string
+  label: External Database username
+  show_if: "mongodb.enabled=false"
+  group: "Database Settings"
+- variable: externalDatabase.password
+  default: ""
+  description: "External database password"
+  type: password
+  label: External Database password
+  show_if: "mongodb.enabled=false"
+  group: "Database Settings"
+- variable: externalDatabase.database
+  default: ""
+  description: "Name of the existing database"
+  type: string
+  label: External Database
+  show_if: "mongodb.enabled=false"
+  group: "Database Settings"
+- variable: externalDatabase.port
+  default: "3306"
+  description: "External database port number"
+  type: string
+  label: External Database Port
+  show_if: "mongodb.enabled=false"
+  group: "Database Settings"
+- variable: mongodb.persistence.enabled
+  default: "false"
+  description: "Enable persistent volume for MongoDB"
+  type: boolean
+  required: true
+  label: MariaDB Persistent Volume Enabled
+  show_if: "mongodb.enabled=true"
+  show_subquestion_if: true
+  group: "Database Settings"
+  subquestions:
+  - variable: mongodb.persistence.size
+    default: "8Gi"
+    description: "MongoDB Persistent Volume Size"
+    type: string
+    label: MongoDB Volume Size
+  - variable: mongodb.persistence.storageClass
+    default: ""
+    description: "If undefined or null, uses the default StorageClass. Default to null"
+    type: storageclass
+    label: Default StorageClass for MongoDB
+- variable: persistence.enabled
+  default: "false"
+  description: "Enable persistent volume for NodeJS App"
+  type: boolean
+  required: true
+  label: NodeJS App Persistent Volume Enabled
+  show_subquestion_if: true
+  group: "NodeJS Settings"
+  subquestions:
+  - variable: persistence.size
+    default: "10Gi"
+    description: "NodeJS App Persistent Volume Size"
+    type: string
+    label: NodeJS App Volume Size
+  - variable: persistence.storageClass
+    default: ""
+    description: "If undefined or null, uses the default StorageClass. Default to null"
+    type: storageclass
+    label: Default StorageClass for NodeJS App
+- variable: serviceType
+  default: "NodePort"
+  description: "NodeJS App Service type"
+  type: enum
+  show_if: "ingress.enabled=false"
+  options:
+    - "ClusterIP"
+    - "NodePort"
+    - "LoadBalancer"
+  required: true
+  label: NodeJS App Service Type
+  show_subquestion_if: "NodePort"
+  group: "Services and Load Balancing"
+  subquestions:
+  - variable: nodePorts.http
+    default: ""
+    description: "NodePort http port(to set explicitly, choose port between 30000-32767)"
+    type: int
+    min: 30000
+    max: 32767
+    show_if: "ingress.enabled=false&&serviceType=NodePort"
+    label: NodePort Http Port
+  - variable: nodePorts.https
+    default: ""
+    description: "NodePort https port(to set explicitly, choose port between 30000-32767)"
+    type: int
+    min: 30000
+    max: 32767
+    show_if: "ingress.enabled=false&&serviceType=NodePort"
+    label: NodePort Https Port
+- variable: ingress.enabled
+  default: "true"
+  description: "Expose app using Layer 7 Load Balancer - ingress"
+  type: boolean
+  label: Expose app using Layer 7 Load Balancer
+  show_subquestion_if: true
+  group: "Services and Load Balancing"
+  subquestions:
+  - variable: ingress.hosts[0].name
+    default: "xip.io"
+    description: "Hostname to your NodeJS App installation"
+    type: hostname
+    required: true
+    label: Hostname
