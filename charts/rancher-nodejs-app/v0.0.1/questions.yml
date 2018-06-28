@@ -54,6 +54,38 @@ questions:
       type: string
       description: "The ROOT_URL environment variable should be set to the URL that clients will be accessing your application with"
       required: true
+  show_subquestion_if: "loopback"
+  subquestions:
+    - variable: smtp.enabled
+      label: "Enable SMTP datasource"
+      type: boolean
+      description: "Set this to true incase you are going to use the email connector in loopback, for more info: http://loopback.io/search/?q=Email+connector"
+      default: "false"
+      show_subquestion_if: true
+      subquestions:
+        - variable: smtpHost
+          label: "SMTP HOST"
+          type: string
+          required: true
+        - variable: smtpPort
+          label: "SMTP Port"
+          type: int
+          required: true
+        - variable: smtpProtocol
+          label: "SMTP Protocol"
+          type: enum
+          options:
+            - tls
+            - ssl
+          required: true
+        - variable: smtpUsername
+          label: "SMTP Username"
+          type: string
+          required: true
+        - variabe: smtpPassword
+          label: "SMTP Password"
+          type: password
+          required: true
 - variable: persistence.enabled
   default: "false"
   description: "Enable persistent volume for NodeJS App"
