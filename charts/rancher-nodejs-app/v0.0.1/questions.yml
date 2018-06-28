@@ -61,32 +61,34 @@ questions:
       type: boolean
       description: "Set this to true incase you are going to use the email connector in loopback"
       default: "false"
-      show_subquestion_if: true
-      group: "NodeJS App Settings"
-      subquestions:
-      - variable: smtpHost
-        label: "SMTP HOST"
-        type: string
-        required: true
-      - variable: smtpPort
-        label: "SMTP Port"
-        type: int
-        required: true
-      - variable: smtpProtocol
-        label: "SMTP Protocol"
-        type: enum
-        options:
-          - tls
-          - ssl
-        required: true
-      - variable: smtpUsername
-        label: "SMTP Username"
-        type: string
-        required: true
-      - variabe: smtpPassword
-        label: "SMTP Password"
-        type: password
-        required: true
+    - variable: smtpHost
+      label: "SMTP HOST"
+      type: string
+      required: true
+      show_if: "smtp.enabled=true"
+    - variable: smtpPort
+      label: "SMTP Port"
+      type: int
+      required: true
+      show_if: "smtp.enabled=true"
+    - variable: smtpProtocol
+      label: "SMTP Protocol"
+      type: enum
+      options:
+        - tls
+        - ssl
+      required: true
+      show_if: "smtp.enabled=true"
+    - variable: smtpUsername
+      label: "SMTP Username"
+      type: string
+      required: true
+      show_if: "smtp.enabled=true"
+    - variabe: smtpPassword
+      label: "SMTP Password"
+      type: password
+      required: true
+      show_if: "smtp.enabled=true"
 - variable: persistence.enabled
   default: "false"
   description: "Enable persistent volume for NodeJS App"
