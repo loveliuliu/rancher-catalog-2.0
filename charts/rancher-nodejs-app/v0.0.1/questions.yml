@@ -41,6 +41,7 @@ questions:
 - variable: appType
   type: enum
   description: "Set the type of the NodeJS application (e.g. meteor, loopback)"
+  label: "NodeJS Application type"
   group: "NodeJS App Settings"
   options:
     - "meteor"
@@ -49,8 +50,9 @@ questions:
   show_subquestion_if: "meteor"
   subquestions:
     - variable: rootUrl
+      label: "Meteor Root URL"
       type: string
-      description: "ROOT_URL variable that is needed by MeteorJS Applications"
+      description: "The ROOT_URL environment variable should be set to the URL that clients will be accessing your application with"
       required: true
 - variable: persistence.enabled
   default: "false"
