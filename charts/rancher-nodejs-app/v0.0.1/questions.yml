@@ -32,6 +32,45 @@ questions:
     description: "MongoDB image tag"
     type: string
     label: MongoDB Image Tag
+- variable: nodeEnv
+  default: "staging"
+  description: "Node environment variable that describes the environment you want to use"
+  type: string
+  label: NODE_ENV variable definition
+  group: "NodeJS App Settings"
+- variable: appType
+  type: enum
+  description: "Set the type of the NodeJS application (e.g. meteor, loopback)"
+  group: "NodeJS App Settings"
+  options:
+    - "meteor"
+    - "loopback"
+    - "react"
+  show_subquestion_if: "meteor"
+  subquestions:
+    - variable: rootUrl
+      type: string
+      description: "ROOT_URL variable that is needed by MeteorJS Applications"
+      required: true
+- variable: persistence.enabled
+  default: "false"
+  description: "Enable persistent volume for NodeJS App"
+  type: boolean
+  required: true
+  label: NodeJS App Persistent Volume Enabled
+  show_subquestion_if: true
+  group: "NodeJS App Settings"
+  subquestions:
+  - variable: persistence.size
+    default: "10Gi"
+    description: "NodeJS App Persistent Volume Size"
+    type: string
+    label: NodeJS App Volume Size
+  - variable: persistence.storageClass
+    default: ""
+    description: "If undefined or null, uses the default StorageClass. Default to null"
+    type: storageclass
+    label: Default StorageClass for NodeJS App
 - variable: mongodb.enabled
   default: "true"
   description: "Deploy a database server as part of this deployment, or set to false and configure an external database connection."
@@ -113,25 +152,6 @@ questions:
     description: "If undefined or null, uses the default StorageClass. Default to null"
     type: storageclass
     label: Default StorageClass for MongoDB
-- variable: persistence.enabled
-  default: "false"
-  description: "Enable persistent volume for NodeJS App"
-  type: boolean
-  required: true
-  label: NodeJS App Persistent Volume Enabled
-  show_subquestion_if: true
-  group: "NodeJS Settings"
-  subquestions:
-  - variable: persistence.size
-    default: "10Gi"
-    description: "NodeJS App Persistent Volume Size"
-    type: string
-    label: NodeJS App Volume Size
-  - variable: persistence.storageClass
-    default: ""
-    description: "If undefined or null, uses the default StorageClass. Default to null"
-    type: storageclass
-    label: Default StorageClass for NodeJS App
 - variable: serviceType
   default: "NodePort"
   description: "NodeJS App Service type"
