@@ -5,6 +5,7 @@ questions:
   default: "true"
   description: "Use default Docker image"
   label: Use Default Image
+  default: "false"
   type: boolean
   show_subquestion_if: false
   group: "Container Images"
