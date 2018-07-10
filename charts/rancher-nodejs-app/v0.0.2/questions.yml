@@ -53,7 +53,7 @@ questions:
   type: boolean
   description: "Set this to true incase you are going to use the email connector in loopback"
   default: "false"
-  show_if: "appType=loopback"
+  show_if: "appType=loopback || appType=meteor"
   group: "NodeJS App Settings"
 - variable: smtpDsHost
   label: "SMTP HOST"
