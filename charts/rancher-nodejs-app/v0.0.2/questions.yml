@@ -1,37 +1,34 @@
 categories:
 - Backend
 questions:
-- variable: defaultImage
-  default: "true"
-  description: "Use default Docker image"
-  label: Use Default Image
-  default: "false"
-  type: boolean
-  show_subquestion_if: false
+- variable: image.repository
+  default: ""
+  description: "NodeJS App image name"
+  type: string
+  label: NodeJS App Image Name
+  required: true
   group: "Container Images"
-  subquestions:
-  - variable: image.repository
-    default: ""
-    description: "NodeJS App image name"
-    type: string
-    label: NodeJS App Image Name
-    required: true
-  - variable: image.tag
-    default: ""
-    description: "NodeJS App image tag"
-    type: string
-    label: Image Tag
-    required: true
-  - variable: mongodb.image.repository
-    default: "bitnami/mongodb"
-    description: "MongoDB image name"
-    type: string
-    label: MongoDB Image Name
-  - variable: mongodb.image.tag
-    default: "3.6"
-    description: "MongoDB image tag"
-    type: string
-    label: MongoDB Image Tag
+- variable: image.tag
+  default: ""
+  description: "NodeJS App image tag"
+  type: string
+  label: Image Tag
+  required: true
+  group: "Container Images"
+- variable: mongodb.image.repository
+  default: "bitnami/mongodb"
+  description: "MongoDB image name"
+  type: string
+  label: MongoDB Image Name
+  group: "Container Images"
+  show_if: "appType=backend"
+- variable: mongodb.image.tag
+  default: "3.6"
+  description: "MongoDB image tag"
+  type: string
+  label: MongoDB Image Tag
+  group: "Container Images"
+  show_if: "appType=backend"
 - variable: nodeEnv
   default: "staging"
   description: "Node environment variable that describes the environment you want to use"
