@@ -47,22 +47,26 @@ questions:
     - "meteor"
     - "loopback"
     - "react"
+  group: "NodeJS App Settings"
 - variable: smtp.enabled
   label: "Enable SMTP datasource"
   type: boolean
   description: "Set this to true incase you are going to use the email connector in loopback"
   default: "false"
   show_if: "appType=loopback"
+  group: "NodeJS App Settings"
 - variable: smtpDsHost
   label: "SMTP HOST"
   type: string
   required: true
   show_if: "smtp.enabled=true"
+  group: "NodeJS App Settings"
 - variable: smtpDsPort
   label: "SMTP Port"
   type: int
   required: true
   show_if: "smtp.enabled=true"
+  group: "NodeJS App Settings"
 - variable: smtpDsProtocol
   label: "SMTP Protocol"
   type: enum
@@ -71,22 +75,26 @@ questions:
     - ssl
   required: true
   show_if: "smtp.enabled=true"
+  group: "NodeJS App Settings"
 - variable: smtpDsUsername
   label: "SMTP Username"
   type: string
   required: true
   show_if: "smtp.enabled=true"
+  group: "NodeJS App Settings"
 - variabe: smtpDsPassword
   label: "SMTP Password"
   type: password
   required: true
   show_if: "smtp.enabled=true"
+  group: "NodeJS App Settings"
 - variable: rootUrl
   label: "Meteor Root URL"
   type: string
   description: "The ROOT_URL environment variable should be set to the URL that clients will be accessing your application with"
   required: true
   show_if: "appType=meteor"
+  group: "NodeJS App Settings"
 - variable: persistence.enabled
   default: "false"
   description: "Enable persistent volume for NodeJS App"
