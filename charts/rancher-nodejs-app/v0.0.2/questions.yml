@@ -47,6 +47,41 @@ questions:
     - "meteor"
     - "loopback"
     - "react"
+  show_subquestion_if: "loopback"
+  subquestions:
+    - variable: smtp.enabled
+      label: "Enable SMTP datasource"
+      type: boolean
+      description: "Set this to true incase you are going to use the email connector in loopback"
+      default: "false"
+    - variable: smtpDsHost
+      label: "SMTP HOST"
+      type: string
+      required: true
+      show_if: "smtp.enabled=true"
+    - variable: smtpDsPort
+      label: "SMTP Port"
+      type: int
+      required: true
+      show_if: "smtp.enabled=true"
+    - variable: smtpDsProtocol
+      label: "SMTP Protocol"
+      type: enum
+      options:
+        - tls
+        - ssl
+      required: true
+      show_if: "smtp.enabled=true"
+    - variable: smtpDsUsername
+      label: "SMTP Username"
+      type: string
+      required: true
+      show_if: "smtp.enabled=true"
+    - variabe: smtpDsPassword
+      label: "SMTP Password"
+      type: password
+      required: true
+      show_if: "smtp.enabled=true"
   show_subquestion_if: "meteor"
   subquestions:
     - variable: rootUrl
@@ -83,41 +118,6 @@ questions:
       required: true
       show_if: "smtp.enabled=true"
     - variabe: smtpPassword
-      label: "SMTP Password"
-      type: password
-      required: true
-      show_if: "smtp.enabled=true"
-  show_subquestion_if: "loopback"
-  subquestions:
-    - variable: smtp.enabled
-      label: "Enable SMTP datasource"
-      type: boolean
-      description: "Set this to true incase you are going to use the email connector in loopback"
-      default: "false"
-    - variable: smtpDsHost
-      label: "SMTP HOST"
-      type: string
-      required: true
-      show_if: "smtp.enabled=true"
-    - variable: smtpDsPort
-      label: "SMTP Port"
-      type: int
-      required: true
-      show_if: "smtp.enabled=true"
-    - variable: smtpDsProtocol
-      label: "SMTP Protocol"
-      type: enum
-      options:
-        - tls
-        - ssl
-      required: true
-      show_if: "smtp.enabled=true"
-    - variable: smtpDsUsername
-      label: "SMTP Username"
-      type: string
-      required: true
-      show_if: "smtp.enabled=true"
-    - variabe: smtpDsPassword
       label: "SMTP Password"
       type: password
       required: true
