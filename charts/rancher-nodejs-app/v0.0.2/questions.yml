@@ -1,6 +1,14 @@
 categories:
 - Backend
 questions:
+- variable: appType
+  type: enum
+  description: "Set the type of the NodeJS application (e.g. backend, frontend)"
+  label: "NodeJS Application type"
+  group: "Container Images"
+  options:
+    - "backend"
+    - "frontend"
 - variable: image.repository
   default: ""
   description: "NodeJS App image name"
@@ -35,14 +43,6 @@ questions:
   type: string
   label: NODE_ENV variable definition
   group: "NodeJS App Settings"
-- variable: appType
-  type: enum
-  description: "Set the type of the NodeJS application (e.g. backend, frontend)"
-  label: "NodeJS Application type"
-  group: "NodeJS App Settings"
-  options:
-    - "backend"
-    - "frontend"
 - variable: backendAppFramework
   type: enum
   description: "Set the framework of the Backend application (e.g. meteor, loopback)"
@@ -132,6 +132,7 @@ questions:
   type: boolean
   required: true
   label: Install MongoDB
+  show_if: "appType=backend"
   show_subquestion_if: true
   group: "Database Settings"
   subquestions:
