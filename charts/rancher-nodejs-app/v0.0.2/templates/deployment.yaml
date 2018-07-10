@@ -41,6 +41,7 @@ spec:
           value: {{ default "" .Values.smtpDsUser | quote }}
         - name: SMTP_DS_PASS
           value: {{ default "" .Values.smtpDsPass | quote }}
+        {{- if eq .Values.appType "backend" }}
         - name: MONGODB_HOST
         {{- if .Values.mongodb.enabled }}
           value: {{ template "mongodb.fullname" . }}
@@ -75,6 +76,7 @@ spec:
               name: {{ printf "%s-%s" .Release.Name "externaldb" }}
               key: db-password
             {{- end }}
+        {{- end }}
         ports:
         - name: http
           containerPort: 80
