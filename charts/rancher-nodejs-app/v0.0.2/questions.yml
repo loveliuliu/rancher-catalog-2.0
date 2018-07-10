@@ -108,7 +108,7 @@ questions:
   type: string
   description: "The ROOT_URL environment variable should be set to the URL that clients will be accessing your application with"
   required: true
-  show_if: "appType=meteor"
+  show_if: "backendAppFramework=meteor"
   group: "NodeJS App Settings"
 - variable: persistence.enabled
   default: "false"
