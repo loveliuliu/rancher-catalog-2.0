@@ -158,35 +158,35 @@ questions:
   description: "Host of the external database"
   type: string
   label: External Database Host
-  show_if: "mongodb.enabled=false"
+  show_if: "mongodb.enabled=false && appType=backend"
   group: "Database Settings"
 - variable: externalDatabase.user
   default: ""
   description: "Existing username in the external DB"
   type: string
   label: External Database username
-  show_if: "mongodb.enabled=false"
+  show_if: "mongodb.enabled=false && appType=backend"
   group: "Database Settings"
 - variable: externalDatabase.password
   default: ""
   description: "External database password"
   type: password
   label: External Database password
-  show_if: "mongodb.enabled=false"
+  show_if: "mongodb.enabled=false && appType=backend"
   group: "Database Settings"
 - variable: externalDatabase.database
   default: ""
   description: "Name of the existing database"
   type: string
   label: External Database
-  show_if: "mongodb.enabled=false"
+  show_if: "mongodb.enabled=false && appType=backend"
   group: "Database Settings"
 - variable: externalDatabase.port
   default: "3306"
   description: "External database port number"
   type: string
   label: External Database Port
-  show_if: "mongodb.enabled=false"
+  show_if: "mongodb.enabled=false && appType=backend"
   group: "Database Settings"
 - variable: mongodb.persistence.enabled
   default: "false"
@@ -194,7 +194,7 @@ questions:
   type: boolean
   required: true
   label: MongoDB Persistent Volume Enabled
-  show_if: "mongodb.enabled=true"
+  show_if: "mongodb.enabled=true && appType=backend"
   show_subquestion_if: true
   group: "Database Settings"
   subquestions:
