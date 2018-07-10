@@ -40,20 +40,35 @@ questions:
   group: "NodeJS App Settings"
 - variable: appType
   type: enum
-  description: "Set the type of the NodeJS application (e.g. meteor, loopback)"
+  description: "Set the type of the NodeJS application (e.g. backend, frontend)"
   label: "NodeJS Application type"
+  group: "NodeJS App Settings"
+  options:
+    - "backend"
+    - "frontend"
+- variable: backendAppFramework
+  type: enum
+  description: "Set the framework of the Backend application (e.g. meteor, loopback)"
+  label: "Backend Framework"
   group: "NodeJS App Settings"
   options:
     - "meteor"
     - "loopback"
-    - "react"
+  show_if: "appType=backend"
+- variable: frontendAppFramework
+  type: enum
+  description: "Set the framework of the Frontend application (e.g. react)"
+  label: "Frontend Framework"
   group: "NodeJS App Settings"
+  options:
+    - "react"
+  show_if: "appType=frontend"
 - variable: smtp.enabled
   label: "Enable SMTP datasource"
   type: boolean
   description: "Set this to true incase you are going to use the email connector in loopback"
   default: "false"
-  show_if: "appType=loopback || appType=meteor"
+  show_if: "appType=backend"
   group: "NodeJS App Settings"
 - variable: smtpDsHost
   label: "SMTP HOST"
