@@ -47,7 +47,7 @@ questions:
     - "meteor"
     - "loopback"
     - "react"
-  show_subquestion_if: "loopback"
+  - show_subquestion_if: "loopback"
   subquestions:
     - variable: smtp.enabled
       label: "Enable SMTP datasource"
@@ -82,7 +82,7 @@ questions:
       type: password
       required: true
       show_if: "smtp.enabled=true"
-  show_subquestion_if: "meteor"
+  - show_subquestion_if: "meteor"
   subquestions:
     - variable: rootUrl
       label: "Meteor Root URL"
