@@ -54,12 +54,10 @@ questions:
       type: string
       description: "The ROOT_URL environment variable should be set to the URL that clients will be accessing your application with"
       required: true
-  show_subquestion_if: "loopback"
-  subquestions:
     - variable: smtp.enabled
-      label: "Enable SMTP datasource"
+      label: "Enable SMTP"
       type: boolean
-      description: "Set this to true incase you are going to use the email connector in loopback"
+      description: "Set this to true incase you are going to use emails through SMTP from meteor"
       default: "false"
     - variable: smtpHost
       label: "SMTP HOST"
@@ -85,6 +83,41 @@ questions:
       required: true
       show_if: "smtp.enabled=true"
     - variabe: smtpPassword
+      label: "SMTP Password"
+      type: password
+      required: true
+      show_if: "smtp.enabled=true"
+  show_subquestion_if: "loopback"
+  subquestions:
+    - variable: smtp.enabled
+      label: "Enable SMTP datasource"
+      type: boolean
+      description: "Set this to true incase you are going to use the email connector in loopback"
+      default: "false"
+    - variable: smtpDsHost
+      label: "SMTP HOST"
+      type: string
+      required: true
+      show_if: "smtp.enabled=true"
+    - variable: smtpDsPort
+      label: "SMTP Port"
+      type: int
+      required: true
+      show_if: "smtp.enabled=true"
+    - variable: smtpDsProtocol
+      label: "SMTP Protocol"
+      type: enum
+      options:
+        - tls
+        - ssl
+      required: true
+      show_if: "smtp.enabled=true"
+    - variable: smtpDsUsername
+      label: "SMTP Username"
+      type: string
+      required: true
+      show_if: "smtp.enabled=true"
+    - variabe: smtpDsPassword
       label: "SMTP Password"
       type: password
       required: true
