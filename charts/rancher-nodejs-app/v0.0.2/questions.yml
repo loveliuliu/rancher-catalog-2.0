@@ -142,17 +142,20 @@ questions:
     description: "Database name to create"
     type: string
     label: MongoDB Database
+    show_if: "appType=backend"
   - variable: mongodb.mongodbUsername
     default: ""
     required: true
     description: "Database user to create"
     type: string
     label: MongoDB User
+    show_if: "appType=backend"
   - variable: mongodb.mongodbPassword
     default: ""
     description: "password will be auto-generated if not specified"
     type: password
     label: MongoDB Password
+    show_if: "appType=backend"
 - variable: externalDatabase.host
   default: ""
   description: "Host of the external database"
