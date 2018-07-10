@@ -1,5 +1,5 @@
 name: nodejs-app
-version: 0.0.1
+version: 0.0.2
 appVersion: 10.5.0
 description: Event-driven I/O server-side JavaScript environment based on V8
 icon: https://bitnami.com/assets/stacks/nodejs/img/nodejs-stack-110x117.png
