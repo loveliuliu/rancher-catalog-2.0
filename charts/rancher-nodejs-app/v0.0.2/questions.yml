@@ -127,7 +127,7 @@ questions:
     type: storageclass
     label: Default StorageClass for NodeJS App
 - variable: mongodb.enabled
-  default: "true"
+  default: "false"
   description: "Deploy a database server as part of this deployment, or set to false and configure an external database connection."
   type: boolean
   required: true

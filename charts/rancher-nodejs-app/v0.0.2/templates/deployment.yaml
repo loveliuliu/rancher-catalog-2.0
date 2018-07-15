@@ -42,6 +42,11 @@ spec:
         - name: SMTP_DS_PASS
           value: {{ default "" .Values.smtpDsPass | quote }}
         {{- if eq .Values.appType "backend" }}
+        - name: MONGO_URL_STRING
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "fullname" . }}
+              key: mongodb-uri
         - name: MONGODB_HOST
         {{- if .Values.mongodb.enabled }}
           value: {{ template "mongodb.fullname" . }}
