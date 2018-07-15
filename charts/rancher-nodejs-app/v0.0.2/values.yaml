@@ -48,6 +48,7 @@ auth:
   rootUsername: root
   # rootPassword:
 
+
 ## MongoDB additional command line flags
 ##
 ## Can be used to specify command line flags, for example:

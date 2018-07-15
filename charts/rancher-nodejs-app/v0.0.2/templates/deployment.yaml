@@ -47,40 +47,6 @@ spec:
             secretKeyRef:
               name: {{ template "fullname" . }}
               key: mongodb-uri
-        - name: MONGODB_HOST
-        {{- if .Values.mongodb.enabled }}
-          value: {{ template "mongodb.fullname" . }}
-        {{- else }}
-          value: {{ .Values.externalDatabase.host | quote }}
-        {{- end }}
-        - name: MONGODB_PORT
-        {{- if .Values.mongodb.enabled }}
-          value: "27017"
-        {{- else }}
-          value: {{ .Values.externalDatabase.port | quote }}
-        {{- end }}
-        - name: MONGODB_DATABASE
-        {{- if .Values.mongodb.enabled }}
-          value: {{ .Values.mongodb.mongodbDatabase | quote }}
-        {{- else }}
-          value: {{ .Values.externalDatabase.database | quote }}
-        {{- end }}
-        - name: MONGODB_USERNAME
-        {{- if .Values.mongodb.enabled }}
-          value: {{ .Values.mongodb.mongodbUsername | quote }}
-        {{- else }}
-          value: {{ .Values.externalDatabase.user | quote }}
-        {{- end }}
-        - name: MONGODB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-            {{- if .Values.mongodb.enabled }}
-              name: {{ template "mongodb.fullname" . }}
-              key: mongodb-password
-            {{- else }}
-              name: {{ printf "%s-%s" .Release.Name "externaldb" }}
-              key: db-password
-            {{- end }}
         {{- end }}
         ports:
         - name: http
