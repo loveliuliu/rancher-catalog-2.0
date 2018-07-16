@@ -41,6 +41,9 @@ image:
   ##
   pullSecrets:
     - git-serversadmins-com
+  mongodbUsername: foo
+  mongodbPassword: rbu0o90KGjVU0
+  mongodbDatabase: bar
 
 auth: 
   enabled: true
