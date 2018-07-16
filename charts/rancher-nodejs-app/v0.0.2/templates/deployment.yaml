@@ -41,11 +41,13 @@ spec:
           value: {{ default "" .Values.smtpDsUser | quote }}
         - name: SMTP_DS_PASS
           value: {{ default "" .Values.smtpDsPass | quote }}
+        {{- if eq .Values.appType "backend" }}
         - name: MONGO_URL_STRING
           valueFrom:
             secretKeyRef:
               name: {{ template "fullname" . }}
               key: mongodb-uri
+        {{- end }}
         ports:
         - name: http
           containerPort: 3000
